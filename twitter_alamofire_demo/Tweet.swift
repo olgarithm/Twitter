@@ -2,8 +2,8 @@
 //  Tweet.swift
 //  twitter_alamofire_demo
 //
-//  Created by Charles Hieger on 6/18/17.
-//  Copyright © 2017 Charles Hieger. All rights reserved.
+//  Created by Olga Andreeva on 6/18/17.
+//  Copyright © 2017 Olga Andreeva. All rights reserved.
 //
 
 import Foundation
@@ -43,8 +43,15 @@ class Tweet {
         formatter.timeStyle = .none
         // Convert Date to String
         createdAtString = formatter.string(from: date)
-        
-        
+    }
+    
+    static func tweets(with array: [[String: Any]]) -> [Tweet] {
+        var tweets: [Tweet] = []
+        for tweetDictionary in array {
+            let tweet = Tweet(dictionary: tweetDictionary)
+            tweets.append(tweet)
+        }
+        return tweets
     }
 }
 

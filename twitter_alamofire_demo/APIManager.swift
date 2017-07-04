@@ -2,8 +2,8 @@
 //  APIManager.swift
 //  twitter_alamofire_demo
 //
-//  Created by Charles Hieger on 4/4/17.
-//  Copyright © 2017 Charles Hieger. All rights reserved.
+//  Created by Olga Andreeva on 4/4/17.
+//  Copyright © 2017 Olga Andreeva. All rights reserved.
 //
 
 import Foundation
@@ -15,14 +15,24 @@ import KeychainAccess
 class APIManager: SessionManager {
     
     // MARK: TODO: Add App Keys
-    static let consumerKey = "YOUR_KEY_HERE"
-    static let consumerSecret = "YOUR_SECRET_HERE"
+    static let consumerKey = "0Cf2pMidWxLCp1VSdRXr9RxcX"
+    static let consumerSecret = "Zu3aziO9MtuUMtmuYgcq75OXxQ4y3kw18JSnhPsToEU7CMuGtH"
     
     static let requestTokenURL = "https://api.twitter.com/oauth/request_token"
     static let authorizeURL = "https://api.twitter.com/oauth/authorize"
     static let accessTokenURL = "https://api.twitter.com/oauth/access_token"
     
     static let callbackURLString = "alamoTwitter://"
+    
+    static func logout() {
+        // 1. Clear current user
+        User.current = nil
+        
+        // TODO: 2. Deauthorize OAuth tokens
+        
+        // 3. Post logout notification
+        NotificationCenter.default.post(name: NSNotification.Name("didLogout"), object: nil)
+    }
     
     // MARK: Twitter API methods
     func login(success: @escaping () -> (), failure: @escaping (Error?) -> ()) {
@@ -39,9 +49,8 @@ class APIManager: SessionManager {
                     failure(error)
                 } else if let user = user {
                     print("Welcome \(user.name)")
-                    
                     // MARK: TODO: set User.current, so that it's persisted
-                    
+                    User.current = user
                     success()
                 }
             })
@@ -183,6 +192,7 @@ class APIManager: SessionManager {
         
         if let data = keychain[data: "twitter_credentials"] {
             let credential = NSKeyedUnarchiver.unarchiveObject(with: data) as! OAuthSwiftCredential
+            
             return credential
         } else {
             return nil

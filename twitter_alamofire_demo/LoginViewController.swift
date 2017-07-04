@@ -2,8 +2,8 @@
 //  LoginViewController.swift
 //  twitter_alamofire_demo
 //
-//  Created by Charles Hieger on 4/4/17.
-//  Copyright © 2017 Charles Hieger. All rights reserved.
+//  Created by Olga Andreeva on 4/4/17.
+//  Copyright © 2017 Olga Andreeva. All rights reserved.
 //
 
 import UIKit

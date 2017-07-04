@@ -2,8 +2,8 @@
 //  TimelineViewController.swift
 //  twitter_alamofire_demo
 //
-//  Created by Charles Hieger on 6/18/17.
-//  Copyright © 2017 Charles Hieger. All rights reserved.
+//  Created by Olga Andreeva on 6/18/17.
+//  Copyright © 2017 Olga Andreeva. All rights reserved.
 //
 
 import UIKit
@@ -11,8 +11,8 @@ import UIKit
 class TimelineViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var tweets: [Tweet] = []
-    
     @IBOutlet weak var tableView: UITableView!
+    var refreshControl: UIRefreshControl!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,13 +20,24 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.dataSource = self
         tableView.delegate = self
         
-        tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.estimatedRowHeight = 100
-        
+        refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), for: UIControlEvents.valueChanged)
+        tableView.insertSubview(refreshControl, at: 0)
+        //tableView.rowHeight = UITableViewAutomaticDimension
+        getTweets()
+        tableView.estimatedRowHeight = 300
+    
+    }
+    
+    func refreshControlAction(_ refreshControl: UIRefreshControl) {
+        getTweets()
+    }
+    
+    func getTweets() {
         APIManager.shared.getHomeTimeLine { (tweets, error) in
             if let tweets = tweets {
                 self.tweets = tweets
                 self.tableView.reloadData()
+                self.refreshControl.endRefreshing()
             } else if let error = error {
                 print("Error getting home timeline: " + error.localizedDescription)
             }
@@ -41,6 +52,8 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         let cell = tableView.dequeueReusableCell(withIdentifier: "TweetCell", for: indexPath) as! TweetCell
         
         cell.tweet = tweets[indexPath.row]
+        cell.profileImageView.layer.cornerRadius = 5
+        cell.profileImageView.layer.masksToBounds = true
         
         return cell
     }

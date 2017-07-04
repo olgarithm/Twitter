@@ -71,7 +71,7 @@ open class KeychainPreferences: PreferencesAdapter, MutablePreferencesType {
     }
 
     open func string(forKey key: PreferenceKey) -> String? {
-        if let data = data(forKey: key), let currentString = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as? String {
+        if let data = data(forKey: key), let currentString = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as String? {
             return currentString
         }
         return nil
@@ -163,7 +163,7 @@ open class KeychainPreferences: PreferencesAdapter, MutablePreferencesType {
             if let items = result as? [[String: AnyObject]] {
                 for item in items {
                     if let key = item[Constants.account] as? String, let data = item[Constants.valueData] as? Data {
-                        if let text = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as? String {
+                        if let text = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as String? {
                             dico[key] = text
                         } else {
                             dico[key] = data

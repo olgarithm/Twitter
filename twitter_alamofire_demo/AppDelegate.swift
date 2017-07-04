@@ -2,8 +2,8 @@
 //  AppDelegate.swift
 //  twitter_alamofire_demo
 //
-//  Created by Charles Hieger on 4/4/17.
-//  Copyright © 2017 Charles Hieger. All rights reserved.
+//  Created by Olga Andreeva on 4/4/17.
+//  Copyright © 2017 Olga Andreeva. All rights reserved.
 //
 
 import UIKit
@@ -13,16 +13,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     
-    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         // MARK: TODO: Check for logged in user
-        
-        NotificationCenter.default.addObserver(forName: Notification.Name("didLogout"), object: nil, queue: OperationQueue.main) { (Notification) in
-            print("Logout notification received")
+        if (User.current != nil) {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let loginVC = storyboard.instantiateViewController(withIdentifier: "LoginViewController")
-            self.window?.rootViewController = loginVC
+            let homeTimelineViewController = storyboard.instantiateViewController(withIdentifier: "TimelineViewController")
+            window?.rootViewController = homeTimelineViewController
+        } else {
+            NotificationCenter.default.addObserver(forName: Notification.Name("didLogout"), object: nil, queue: OperationQueue.main) { (Notification) in
+                print("Logout notification received")
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let loginVC = storyboard.instantiateViewController(withIdentifier: "LoginViewController")
+                self.window?.rootViewController = loginVC
+            }
         }
         
         return true

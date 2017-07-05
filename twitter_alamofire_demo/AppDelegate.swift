@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // MARK: TODO: Check for logged in user
         if (User.current != nil) {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let homeTimelineViewController = storyboard.instantiateViewController(withIdentifier: "TimelineViewController")
+            let homeTimelineViewController = storyboard.instantiateViewController(withIdentifier: "TweetsNavigationController")
             window?.rootViewController = homeTimelineViewController
         } else {
             NotificationCenter.default.addObserver(forName: Notification.Name("didLogout"), object: nil, queue: OperationQueue.main) { (Notification) in

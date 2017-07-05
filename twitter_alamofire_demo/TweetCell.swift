@@ -17,6 +17,33 @@ class TweetCell: UITableViewCell {
     @IBOutlet weak var tweetLabel: UILabel!
     @IBOutlet weak var retweetsLabel: UILabel!
     @IBOutlet weak var favoritesLabel: UILabel!
+    var id: Int64!
+    
+    @IBAction func favoriteTweet(_ sender: UIButton) {
+        let priorFavorites = Int(favoritesLabel.text!)
+        if (sender.isSelected) {
+            sender.isSelected = false
+            APIManager.shared.unfavorite(tweetID: id) 
+            favoritesLabel.text = String(priorFavorites! - 1)
+        } else {
+            sender.isSelected = true
+            APIManager.shared.favorite(tweetID: id)
+            favoritesLabel.text = String(priorFavorites! + 1)
+        }
+    }
+    
+    @IBAction func retweetTweet(_ sender: UIButton) {
+        let priorRetweets = Int(retweetsLabel.text!)
+        if (sender.isSelected) {
+            sender.isSelected = false
+            APIManager.shared.unretweet(tweetID: id)
+            retweetsLabel.text = String(priorRetweets! - 1)
+        } else {
+            sender.isSelected = true
+            APIManager.shared.retweet(tweetID: id)
+            retweetsLabel.text = String(priorRetweets! + 1)
+        }
+    }
     
     var tweet: Tweet! {
         didSet {
@@ -29,6 +56,7 @@ class TweetCell: UITableViewCell {
             retweetsLabel.text = retweetString
             let favoritesString = "\(String(tweet.favoriteCount!))"
             favoritesLabel.text = favoritesString
+            id = tweet.id
         }
     }
     

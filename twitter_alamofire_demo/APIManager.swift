@@ -126,13 +126,28 @@ class APIManager: SessionManager {
         }
     }
     
+    
+    
     // MARK: TODO: Favorite a Tweet
+    func favorite(tweetID: Int64) {
+        request(URL(string: "https://api.twitter.com/1.1/favorites/create.json?id=\(tweetID)")!, method: .post)
+    }
     
     // MARK: TODO: Un-Favorite a Tweet
+    func unfavorite(tweetID: Int64) {
+        request(URL(string: "https://api.twitter.com/1.1/favorites/destroy.json?id=\(tweetID)")!, method: .post)
+    }
     
     // MARK: TODO: Retweet
+    func retweet(tweetID: Int64) {
+        request(URL(string: "https://api.twitter.com/1.1/statuses/retweet/:id.json?id=\(tweetID)")!, method: .post)
+    }
     
     // MARK: TODO: Un-Retweet
+    func unretweet(tweetID: Int64) {
+        request(URL(string: "https://api.twitter.com/1.1/statuses/unretweet/:id.json?id=\(tweetID)")!, method: .post)
+    }
+    
     
     // MARK: TODO: Compose Tweet
     

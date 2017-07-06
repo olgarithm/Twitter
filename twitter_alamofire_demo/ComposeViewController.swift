@@ -7,12 +7,20 @@
 //
 
 import UIKit
+import RSKPlaceholderTextView
 
-class ComposeViewController: UIViewController {
+protocol ComposeViewControllerDelegate {
+    func did(post: Tweet)
+}
 
+class ComposeViewController: UIViewController, ComposeViewControllerDelegate {
+
+    @IBOutlet weak var tweetTextView: RSKPlaceholderTextView!
+    var delegate: ComposeViewControllerDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
     }
 
@@ -21,6 +29,27 @@ class ComposeViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func didPressTweet(_ sender: Any) {
+        if (!tweetTextView.text.isEmpty) {
+            APIManager.shared.composeTweet(with: tweetTextView.text) { (tweet, error) in
+                if let error = error {
+                    print("Error composing Tweet: \(error.localizedDescription)")
+                } else if let tweet = tweet {
+                    self.delegate?.did(post: tweet)
+                    print("Compose Tweet Success!")
+                }
+            }
+        } else {
+            let alertController = UIAlertController(title: "Tweet Error", message:
+                "No empty tweets allowed", preferredStyle: UIAlertControllerStyle.alert)
+            alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default,handler: nil))
+            self.present(alertController, animated: true, completion: nil)
+        }
+    }
+    
+    func did(post: Tweet) {
+        
+    }
 
     /*
     // MARK: - Navigation

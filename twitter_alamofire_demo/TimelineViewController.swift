@@ -22,9 +22,9 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(TimelineViewController.getTweets), for: UIControlEvents.valueChanged)
         tableView.insertSubview(refreshControl, at: 0)
-       // tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableViewAutomaticDimension
         getTweets()
-        // tableView.estimatedRowHeight = 4000
+        tableView.estimatedRowHeight = 100
     
     }
     

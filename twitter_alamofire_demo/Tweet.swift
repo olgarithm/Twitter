@@ -13,7 +13,7 @@ class Tweet {
     // MARK: Properties
     var id: Int64 // For favoriting, retweeting & replying
     var text: String // Text content of tweet
-    var favoriteCount: Int? // Update favorite count label
+    var favoriteCount: Int // Update favorite count label
     var favorited: Bool? // Configure favorite button
     var retweetCount: Int // Update favorite count label
     var retweeted: Bool // Configure retweet button
@@ -24,7 +24,7 @@ class Tweet {
     init(dictionary: [String: Any]) {
         id = dictionary["id"] as! Int64
         text = dictionary["text"] as! String
-        favoriteCount = dictionary["favorite_count"] as? Int
+        favoriteCount = (dictionary["favorite_count"] as? Int)!
         favorited = dictionary["favorited"] as? Bool
         retweetCount = dictionary["retweet_count"] as! Int
         retweeted = dictionary["retweeted"] as! Bool

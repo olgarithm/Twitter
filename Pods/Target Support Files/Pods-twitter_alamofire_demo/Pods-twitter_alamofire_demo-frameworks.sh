@@ -91,6 +91,7 @@ strip_invalid_archs() {
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/Alamofire/Alamofire.framework"
   install_framework "$BUILT_PRODUCTS_DIR/AlamofireImage/AlamofireImage.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/DateToolsSwift/DateToolsSwift.framework"
   install_framework "$BUILT_PRODUCTS_DIR/KeychainAccess/KeychainAccess.framework"
   install_framework "$BUILT_PRODUCTS_DIR/OAuthSwift/OAuthSwift.framework"
   install_framework "$BUILT_PRODUCTS_DIR/OAuthSwiftAlamofire/OAuthSwiftAlamofire.framework"
@@ -100,6 +101,7 @@ fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/Alamofire/Alamofire.framework"
   install_framework "$BUILT_PRODUCTS_DIR/AlamofireImage/AlamofireImage.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/DateToolsSwift/DateToolsSwift.framework"
   install_framework "$BUILT_PRODUCTS_DIR/KeychainAccess/KeychainAccess.framework"
   install_framework "$BUILT_PRODUCTS_DIR/OAuthSwift/OAuthSwift.framework"
   install_framework "$BUILT_PRODUCTS_DIR/OAuthSwiftAlamofire/OAuthSwiftAlamofire.framework"

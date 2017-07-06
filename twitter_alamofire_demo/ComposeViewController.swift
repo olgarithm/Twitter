@@ -13,7 +13,7 @@ protocol ComposeViewControllerDelegate {
     func did(post: Tweet)
 }
 
-class ComposeViewController: UIViewController, ComposeViewControllerDelegate {
+class ComposeViewController: UIViewController {
 
     @IBOutlet weak var tweetTextView: RSKPlaceholderTextView!
     var delegate: ComposeViewControllerDelegate?
@@ -45,10 +45,6 @@ class ComposeViewController: UIViewController, ComposeViewControllerDelegate {
             alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default,handler: nil))
             self.present(alertController, animated: true, completion: nil)
         }
-    }
-    
-    func did(post: Tweet) {
-        
     }
 
     /*

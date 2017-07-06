@@ -2,6 +2,7 @@ PODS:
   - Alamofire (4.4.0)
   - AlamofireImage (3.2.0):
     - Alamofire (~> 4.1)
+  - DateToolsSwift (2.0.3)
   - KeychainAccess (3.0.1)
   - OAuthSwift (1.1.1)
   - OAuthSwiftAlamofire (0.1.0):
@@ -18,6 +19,7 @@ PODS:
 DEPENDENCIES:
   - Alamofire (~> 4.4)
   - AlamofireImage (~> 3.1)
+  - DateToolsSwift
   - KeychainAccess
   - OAuthSwift (~> 1.1.0)
   - OAuthSwiftAlamofire
@@ -27,12 +29,13 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
   AlamofireImage: 157ed682cc81d3b9db4fb90c1f12180ac552d93b
+  DateToolsSwift: bf69bf9056d9e53c5c03f06e51f219b9b8b02f9e
   KeychainAccess: 017ea25e313a49eda10bb19b0bb0760fb1edfe1a
   OAuthSwift: 6e3a103b3e5639411769cc7e199ec7e14bd1547f
   OAuthSwiftAlamofire: 20bb998ac506f82c3bab0625fbc98a9c6fca783f
   Prephirences: d0ec0bd6047edb3370364345857a769aaf3db312
   RSKPlaceholderTextView: 301f0f30e70e7c42fe4e941e3a08365ab0d890d5
 
-PODFILE CHECKSUM: f28f07b6a9d0e5bbdc6edea2d73b618459336c83
+PODFILE CHECKSUM: 95969ecb0ef4e0bae2f05b5726f528588fea7b89
 
 COCOAPODS: 1.2.1

@@ -15,6 +15,9 @@ class User {
     var screenName: String?
     var profileImage: URL?
     var dictionary: [String: Any]?
+    var following: Int?
+    var followers: Int?
+    var tweets: Int?
     private static var _current: User?
     
     init(dictionary: [String: Any]) {
@@ -22,6 +25,9 @@ class User {
         name = dictionary["name"] as! String
         screenName = dictionary["screen_name"] as? String
         let profileURL = dictionary["profile_image_url_https"] as! String
+        following = dictionary["friends_count"] as? Int
+        followers = dictionary["followers_count"] as? Int
+        tweets = dictionary["statuses_count"] as? Int
         profileImage = URL(string: profileURL)!
     }
     

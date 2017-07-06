@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TimelineViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class TimelineViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ComposeViewControllerDelegate {
     
     var tweets: [Tweet] = []
     @IBOutlet weak var tableView: UITableView!
@@ -19,13 +19,17 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         
         tableView.dataSource = self
         tableView.delegate = self
+        refreshTweets()
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 100
+    
+    }
+    
+    func refreshTweets() {
         refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(TimelineViewController.getTweets), for: UIControlEvents.valueChanged)
         tableView.insertSubview(refreshControl, at: 0)
-        tableView.rowHeight = UITableViewAutomaticDimension
         getTweets()
-        tableView.estimatedRowHeight = 100
-    
     }
     
     func getTweets() {
@@ -63,20 +67,22 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         // Dispose of any resources that can be recreated.
     }
     
-    
     @IBAction func didTapLogout(_ sender: Any) {
         APIManager.shared.logout()
+        performSegue(withIdentifier: "logoutSegue", sender: nil)
+    }
+
+    func did(post: Tweet) {
+        tweets.append(post)
+        refreshTweets()
     }
     
-    
-    /*
      // MARK: - Navigation
      
      // In a storyboard-based application, you will often want to do a little preparation before navigation
      override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
+        let destinationNavigationController = segue.destination as! UINavigationController
+        let vc = destinationNavigationController.topViewController as! ComposeViewController
+        vc.delegate = self as ComposeViewControllerDelegate
      }
-     */
-    
 }

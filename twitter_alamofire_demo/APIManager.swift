@@ -15,8 +15,8 @@ import KeychainAccess
 class APIManager: SessionManager {
     
     // MARK: TODO: Add App Keys
-    static let consumerKey = "0Cf2pMidWxLCp1VSdRXr9RxcX"
-    static let consumerSecret = "Zu3aziO9MtuUMtmuYgcq75OXxQ4y3kw18JSnhPsToEU7CMuGtH"
+    static let consumerKey = "fUK3CKryeQnvv8vi238IcJs2n"
+    static let consumerSecret = "QpljhnfgmCYKzx6l6WdKQAsJKL9lLzD7cnVoraDLl4rhvXcmeG"
     
     static let requestTokenURL = "https://api.twitter.com/oauth/request_token"
     static let authorizeURL = "https://api.twitter.com/oauth/authorize"
@@ -24,19 +24,9 @@ class APIManager: SessionManager {
     
     static let callbackURLString = "alamoTwitter://"
     
-    static func logout() {
-        // 1. Clear current user
-        User.current = nil
-        
-        // TODO: 2. Deauthorize OAuth tokens
-        
-        // 3. Post logout notification
-        NotificationCenter.default.post(name: NSNotification.Name("didLogout"), object: nil)
-    }
-    
     // MARK: Twitter API methods
     func login(success: @escaping () -> (), failure: @escaping (Error?) -> ()) {
-        
+        print("we logging in")
         // Add callback url to open app when returning from Twitter login on web
         let callbackURL = URL(string: APIManager.callbackURLString)!
         oauthManager.authorize(withCallbackURL: callbackURL, success: { (credential, _response, parameters) in
@@ -61,8 +51,9 @@ class APIManager: SessionManager {
     
     func logout() {
         clearCredentials()
-        
+        print("we're logging out")
         // TODO: Clear current user by setting it to nil
+        User.current = nil
 
         NotificationCenter.default.post(name: NSNotification.Name("didLogout"), object: nil)
     }
@@ -90,7 +81,7 @@ class APIManager: SessionManager {
 
         // This uses tweets from disk to avoid hitting rate limit. Comment out if you want fresh
         // tweets,
-        if let data = UserDefaults.standard.object(forKey: "hometimeline_tweets") as? Data {
+        /*if let data = UserDefaults.standard.object(forKey: "hometimeline_tweets") as? Data {
             let tweetDictionaries = NSKeyedUnarchiver.unarchiveObject(with: data) as! [[String: Any]]
             let tweets = tweetDictionaries.flatMap({ (dictionary) -> Tweet in
                 Tweet(dictionary: dictionary)
@@ -98,7 +89,7 @@ class APIManager: SessionManager {
             
             completion(tweets, nil)
             return
-        }
+        }*/
         
         request(URL(string: "https://api.twitter.com/1.1/statuses/home_timeline.json")!, method: .get)
             .validate()
@@ -129,7 +120,7 @@ class APIManager: SessionManager {
     
     // MARK: TODO: Favorite a Tweet
     func favorite(_ tweet: Tweet, completion: @escaping (Tweet?, Error?) -> ()) {
-        let urlString = "hhttps://api.twitter.com/1.1/favorites/create.json"
+        let urlString = "https://api.twitter.com/1.1/favorites/create.json"
         let parameters = ["id": tweet.id]
         request(urlString, method: .post, parameters: parameters, encoding: URLEncoding.queryString).responseJSON { (response) in
             if response.result.isSuccess,
@@ -197,6 +188,7 @@ class APIManager: SessionManager {
             let tweet = Tweet(dictionary: tweetDictionary)
             completion(tweet, nil)
         }) { (error: OAuthSwiftError) in
+            print(error)
             completion(nil, error.underlyingError)
         }
     }

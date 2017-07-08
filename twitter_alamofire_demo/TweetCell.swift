@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol TweetCellDelegate: class {
+    func tweetCell(_ tweetCell: TweetCell, didTap user: User)
+}
+
 class TweetCell: UITableViewCell {
     
     @IBOutlet weak var profileImageView: UIImageView!
@@ -18,13 +22,14 @@ class TweetCell: UITableViewCell {
     @IBOutlet weak var retweetsLabel: UILabel!
     @IBOutlet weak var favoritesLabel: UILabel!
     var id: Int64!
+    weak var delegate: TweetCellDelegate?
     
     var tweet: Tweet! {
         didSet {
             tweetLabel.text = tweet.text
             profileImageView.af_setImage(withURL: tweet.user.profileImage!)
             nameLabel.text = tweet.user.name
-            screennameLabel.text = tweet.user.screenName
+            screennameLabel.text = "@" + tweet.user.screenName!
             dateLabel.text = tweet.createdAtString
             let retweetString = "\(tweet.retweetCount)"
             retweetsLabel.text = retweetString
@@ -84,8 +89,15 @@ class TweetCell: UITableViewCell {
         retweetsLabel.text = String(tweet.retweetCount)
     }
     
+    func didTapUserProfile(_ sender: UITapGestureRecognizer) {
+        delegate?.tweetCell(self, didTap: tweet.user)
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
+        let profileTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.didTapUserProfile(_:)))
+        profileImageView.addGestureRecognizer(profileTapGestureRecognizer)
+        profileImageView.isUserInteractionEnabled = true
         // Initialization code
     }
     

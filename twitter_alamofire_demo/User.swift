@@ -18,6 +18,7 @@ class User {
     var following: Int?
     var followers: Int?
     var tweets: Int?
+    var backgroundImage: URL?
     private static var _current: User?
     
     init(dictionary: [String: Any]) {
@@ -25,10 +26,12 @@ class User {
         name = dictionary["name"] as! String
         screenName = dictionary["screen_name"] as? String
         let profileURL = dictionary["profile_image_url_https"] as! String
+        let backgroundURL = dictionary["profile_background_image_url_https"] as! String
         following = dictionary["friends_count"] as? Int
         followers = dictionary["followers_count"] as? Int
         tweets = dictionary["statuses_count"] as? Int
         profileImage = URL(string: profileURL)!
+        backgroundImage = URL(string: backgroundURL)!
     }
     
     static var current: User? {

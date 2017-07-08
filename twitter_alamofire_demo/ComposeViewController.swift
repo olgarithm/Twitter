@@ -3,7 +3,7 @@
 //  twitter_alamofire_demo
 //
 //  Created by Olga Andreeva on 7/5/17.
-//  Copyright © 2017 Charles Hieger. All rights reserved.
+//  Copyright © 2017 Olga Andreeva. All rights reserved.
 //
 
 import UIKit
@@ -22,6 +22,9 @@ class ComposeViewController: UIViewController {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+    }
+    @IBAction func dismissTweet(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
     }
 
     override func didReceiveMemoryWarning() {

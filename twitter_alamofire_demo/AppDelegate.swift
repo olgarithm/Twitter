@@ -17,15 +17,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Checks for logged in user and presents either the login page (if a user is not found) or the timeline (if a user is found)
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let loginVC = storyboard.instantiateViewController(withIdentifier: "LoginViewController")
+        let tabBarController = storyboard.instantiateViewController(withIdentifier: "TabBarController")
+      //  let homeTimelineViewController = storyboard.instantiateViewController(withIdentifier: "TweetsNavigationController")
+        
         if (User.current == nil) {
-            NotificationCenter.default.addObserver(forName: Notification.Name("didLogout"), object: nil, queue: OperationQueue.main) { (Notification) in
-                print("Logout notification received")
-                let loginVC = storyboard.instantiateViewController(withIdentifier: "LoginViewController")
-                self.window?.rootViewController = loginVC
-            }
+            window?.rootViewController = loginVC
         } else {
-            let homeTimelineViewController = storyboard.instantiateViewController(withIdentifier: "TweetsNavigationController")
-            window?.rootViewController = homeTimelineViewController
+            window?.rootViewController = tabBarController
+        }
+        NotificationCenter.default.addObserver(forName: Notification.Name("didLogout"), object: nil, queue: OperationQueue.main) { (Notification) in
+            print("Logout notification received")
+            self.window?.rootViewController = loginVC
         }
         return true
     }
